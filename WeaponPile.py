@@ -25,3 +25,6 @@ class WeaponPile(object):
             weaponSets.append(Weapon(random.choice(prefixNames) + " " + random.choice(materialNames) + " " + armNames[i]))
 
         return weaponSets
+
+    def getRandomWeapon(self):
+        return random.choice(self.availableWeapons)

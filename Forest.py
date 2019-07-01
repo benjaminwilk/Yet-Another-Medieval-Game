@@ -3,7 +3,7 @@ import random
 #from Battle import Battle
 #from main import EnemyCreation
 from Battle import Battle
-from Humanoid import EnemyCreation
+from Enemy import Enemy
 from WeaponPile import WeaponPile
 
 
@@ -18,14 +18,17 @@ class Forest(object):
         entryFight = random.randrange(0, 100)
         if entryFight >= 90:
             print("You see a creature guarding the entrance, it wants to fight!")
-            guardCreature = EnemyCreation()
+            guardCreature = Enemy(WeaponPile.getRandomWeapon())
             storeWeapons = WeaponPile().getWeapons()
             guardCreature = guardCreature.enemyCreation(storeWeapons)
             Battle(hero, guardCreature)
         self.wanderingOverview(hero)
 
+    def forestDescriptors(self):
+        forestDescription = ["You fin"]
+
     def wanderingOverview(self, hero):
-        directions = ["north", "south", "east", "west"]
+        directions = ["north", "south", "east", "west", "Go Back to Town"]
 
         while self.isPlotterZeroed() == False:
             print("What direction would you like to go: ")
@@ -43,13 +46,17 @@ class Forest(object):
                 self.plotter[1] += 1
             if dirChoice == "west" or dirChoice == "w" or dirChoice == "W":
                 self.plotter[1] -= 1
+            if "town" in dirChoice:
+                self.plotter[0] = 0
+                self.plotter[1] = 0
 
             deepnessRange = random.randrange(self.plotter[0] * self.plotter[1], 100)
-            print("Deepness Range: " + str(deepnessRange))
+       #     print("Deepness Range: " + str(deepnessRange))
             if deepnessRange > 50:
-                availableWeapons = WeaponPile().getWeapons()
-                enemy = EnemyCreation()
-                Battle(hero, enemy.enemyCreation(availableWeapons))
+                availableWeapons = WeaponPile().getRandomWeapon()
+          #      enemy = Enemy(availableWeapons)
+                print("As " + hero.char.name + " comes to a clearing")
+                Battle(hero, Enemy(availableWeapons))
 
         if self.isPlotterZeroed() == True:
             userLeave = input("Are you sure you want to leave the forest?: ")

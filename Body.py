@@ -4,25 +4,36 @@ import Weapon
 
 class Body(object):
 
-    money = random.randrange(0, 100)
+    maxHealth = 1
+    currentHealth = 1
+    money = 1
 
-    def __init__(self, name, weapon, maxHealth, currentHealth):
-        self.Name = name
-        self.Weapon = weapon
-        self.maxHealth = maxHealth
-        self.currentHealth = currentHealth
+    def __init__(self, passedName, passedWeapon):
+        self.name = passedName
+        self.weapon = passedWeapon
+        self.maxHealth = self.generateHealth()
+        self.currentHealth = self.maxHealth
+        self.money = self.generateMoney()
+
+    def generateHero(self):
+        heroPrefix = ["Human", "Elf", "Halfling", "Dwarf", "Lizard person"]
+        heroTypes = ["Paladin", "Knight", "Mage", "Rogue", "Priest", "Hunter", "Assassin", "Warlock"]
+        return random.choice(heroPrefix) + " " + random.choice(heroTypes)
 
     def healthBar(self):
         return str(self.currentHealth) + "/" + str(self.maxHealth)
 
+    def attack(self, damageAmount):
+        return self.name + " uses its " + self.weapon.name + " to attack and dispenses " + str(damageAmount) + " damage."
+
     def healthDisplay(self):
-        return self.Name + " current health: " + self.healthBar()
+        return self.name + " current health: " + self.healthBar()
 
     def weaponDisplay(self):
-        return self.Name + " has a " + self.Weapon.name + "\nit will do "+ str(self.Weapon.lowDamage) + "-" + str(self.Weapon.highDamage) + " damage"
+        return self.name + " has a " + self.weapon.name + "\nit will do "+ str(self.weapon.lowDamage) + "-" + str(self.weapon.highDamage) + " damage"
 
     def attack(self, damageAmount):
-        return self.Name + " uses its " + self.Weapon.name + " to attack and dispenses " + str(damageAmount) + " damage."
+        return self.name + " uses its " + self.weapon.name + " to attack and dispenses " + str(damageAmount) + " damage."
 
     def decreaseHealth(self, countDown):
         self.currentHealth = self.currentHealth - countDown
@@ -32,6 +43,41 @@ class Body(object):
             return False
         else:
             return True
+
+    def generateHealth(self):
+        healthValue = 1
+        if "Gremlin" in self.name:
+            healthValue = 20
+        if "Ogre" in self.name:
+            healthValue = 40
+        if "Thief" in self.name:
+            healthValue = 25
+        if "Dragon" in self.name:
+            healthValue = 75
+        if "Kobold" in self.name:
+            healthValue = 15
+        if "Dark Knight" in self.name:
+            healthValue = 50
+        if "Ghoul" in self.name:
+            healthValue = 10
+        if "Satyr" in self.name:
+            healthValue = 20
+        if "Gnoll" in self.name:
+            healthValue = 15
+        if "Human" in self.name:
+            healthValue = 30
+        if "Elf" in self.name:
+            healthValue = 20
+        if "Halfling" in self.name:
+            healthValue = 25
+        if "Dwarf" in self.name:
+            healthValue = 40
+        if "Lizard person" in self.name:
+            healthValue = 35
+        return healthValue
+
+    def generateMoney(self):
+        return random.randrange(50, 400)
 
     def increaseMoney(self, passedMoney):
         self.money += passedMoney

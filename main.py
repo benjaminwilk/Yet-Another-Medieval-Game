@@ -4,22 +4,21 @@ from Battle import Battle
 from Body import Body
 from Castle import Castle
 from Forest import Forest
-from Humanoid import Humanoid, HeroCreation
+from Hero import Hero
 from Inn import Inn
 from Shop import Shop
 from Tavern import Tavern
+from Weapon import Weapon
 from WeaponPile import WeaponPile
 
 class World():
     def __init__(self):
-        availableWeapons = WeaponPile().getWeapons()
         locations = ["Tavern", "Shop", "Forest", "Inn", "Castle"]
         userApproval = False
         while userApproval != True:
-            hero = HeroCreation()
-            hero = hero.heroCreation(availableWeapons)
-            print(hero.healthDisplay())
-            print("Your character is " + hero.Name + "\nEquipped with a " + hero.Weapon.name + " that does " + str(hero.Weapon.lowDamage) + "-" + str(hero.Weapon.highDamage) + " damage.")
+            availableWeapons = WeaponPile().getRandomWeapon()
+            hero = Hero(availableWeapons)
+            print("Your character is " + hero.char.name + "\nEquipped with a " + hero.GetWeapon().name + " that does " + str(hero.GetWeapon().lowDamage) + "-" + str(hero.GetWeapon().highDamage) + " damage.")
             userText = input("Do you approve of this character: ")
             if userText is "Y" or userText is "y" or userText is "Yes":
                 userApproval = True

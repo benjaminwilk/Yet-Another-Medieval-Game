@@ -5,17 +5,27 @@ class Weapon(object):
     lowDamage = 0
     highDamage = 0
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, passedName):
+        self.name = passedName
         self.generateLowDamage()
         self.generateHighDamage()
         self.generatePrice()
 
-    def upgradeWeapon(self, name, lowDamage, highDamage):
-        self.name = name
-        self.generateLowDamage()
-        self.generateHighDamage()
-        self.generatePrice()
+    def upgradeWeapon(self, passedName):
+        if "Fists" in passedName:
+            self.name = passedName
+            self.lowDamage = 2
+            self.highDamage = 3
+            self.money = 0
+        else:
+            self.name = passedName
+            self.generateLowDamage()
+            self.generateHighDamage()
+            self.generatePrice()
+
+    def damageSanityCheck(self):
+        while self.lowDamage == self.highDamage:
+            self.highDamage += 1
 
     def dispenseDamage(self):
         return random.randrange(self.lowDamage, self.highDamage)
